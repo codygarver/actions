@@ -1,7 +1,7 @@
 name: 'Setup deb-s3'
 description: 'Setup deb-s3'
 inputs:
-  install-deb-tools:
+  extra-tools:
     description: 'Install common debian packaging tools'
     required: false
     default: 'false'
@@ -70,7 +70,7 @@ runs:
           fi
         fi
 
-        if [ "${{ inputs.install-deb-tools }}" == "true" ]; then
+        if [ "${{ inputs.extra-tools }}" == "true" ]; then
           DEPENDENCIES="debhelper devscripts equivs"
           if [ "$(id --user)" -eq "0" ]; then
             apt-get -y install $DEPENDENCIES
