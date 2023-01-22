@@ -5,6 +5,10 @@ inputs:
     description: 'Install mk-build-deps'
     required: false
     default: 'false'
+  bloom:
+    description: 'Install python3-bloom'
+    required: false
+    default: 'false'
 runs:
   using: 'composite'
   steps:
@@ -73,6 +77,15 @@ runs:
 
         if [ "${{ inputs.mk-build-deps }}" == "true" ]; then
           DEPENDENCIES="debhelper devscripts equivs"
+          if [ "$(id --user)" -eq "0" ]; then
+            apt-get -y install $DEPENDENCIES
+          else
+            sudo apt-get -y install $DEPENDENCIES
+          fi
+        fi
+
+        if [ "${{ inputs.bloom }}" == "true" ]; then
+          DEPENDENCIES="python3-bloom"
           if [ "$(id --user)" -eq "0" ]; then
             apt-get -y install $DEPENDENCIES
           else
