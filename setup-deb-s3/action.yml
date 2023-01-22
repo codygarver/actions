@@ -1,5 +1,10 @@
 name: 'Setup deb-s3'
 description: 'Setup deb-s3'
+inputs:
+  install-deb-tools:
+    description: 'Install common debian packaging tools'
+    required: false
+    default: 'false'
 runs:
   using: 'composite'
   steps:
@@ -62,5 +67,14 @@ runs:
             sudo apt-get update
             sudo apt-get -y install ruby
             sudo gem install deb-s3
+          fi
+        fi
+
+        if [ "${{ inputs.install-deb-tools }}" == "true" ]; then
+          DEPENDENCIES="debhelper devscripts equivs"
+          if [ "$(id --user)" -eq "0" ]; then
+            apt-get -y install $DEPENDENCIES
+          else
+            sudo apt-get -y install $DEPENDENCIES
           fi
         fi

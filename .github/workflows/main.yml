@@ -23,6 +23,8 @@ jobs:
           fi
       - name: Install deb-s3
         uses: codygarver/actions/setup-deb-s3@main
+        with:
+          install-deb-tools: "true"
       - name: Test deb-s3 install
         run: |
           deb-s3 help
