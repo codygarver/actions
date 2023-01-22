@@ -1,9 +1,5 @@
 name: 'Add STOL apt repository'
 description: 'Add STOL apt repository to /etc/apt/sources.list.d'
-author: 'Leidos'
-branding:
-  icon: 'archive'  
-  color: 'orange'
 inputs:
   codename:
     description: 'Codename for sources.list entry'
@@ -22,16 +18,19 @@ runs:
     - name: Add STOL apt repository
       shell: bash
       run: |
-        if [ "$(id --user)" -eq "0" ]; then
-          echo "deb [trusted=yes] https://s3.amazonaws.com/stol-apt-repository ${{ inputs.codename }} ${{ inputs.component }}" | tee /etc/apt/sources.list.d/stol-apt-repository.list
-        else
-          echo "deb [trusted=yes] https://s3.amazonaws.com/stol-apt-repository ${{ inputs.codename }} ${{ inputs.component }}" | sudo tee /etc/apt/sources.list.d/stol-apt-repository.list
-        fi
+        repo="deb [trusted=yes] https://s3.amazonaws.com/stol-apt-repository ${{ inputs.codename }} ${{ inputs.component }}"
+        list="/etc/apt/sources.list.d/stol-apt-repository.list"
 
-        if [ "${{ inputs.update }}" == "true" ]; then
-          if [ "$(id --user)" -eq "0" ]; then
+        if [ "$(id --user)" -eq "0" ]; then
+          echo "$repo" | tee "$list"
+
+          if [ "${{ inputs.update }}" == "true" ]; then
             apt-get update
-          else
+          fi
+        else
+          echo "$repo" | sudo tee "$list"
+
+          if [ "${{ inputs.update }}" == "true" ]; then
             sudo apt-get update
           fi
         fi
