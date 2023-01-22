@@ -1,0 +1,19 @@
+name: Test custom action
+
+on:
+  push:
+
+jobs:
+  apt-repo:
+    runs-on: ubuntu-latest
+    container:
+      image: usdotfhwastoldev/autoware.ai:develop
+      options: --user root
+    steps:
+      - name: Add STOL apt repository
+        uses: codygarver/actions/add-stol-apt-repository@main
+        with:
+          codename: "develop"
+      - name: Install something
+        run: |
+          apt -y install carma-j2735-msgs
