@@ -21,3 +21,8 @@ jobs:
           else
             sudo apt -y install carma-j2735-msgs
           fi
+      - name: Install deb-s3
+        uses: codygarver/actions/setup-deb-s3@main
+      - name: Test deb-s3 install
+        run: |
+          deb-s3 help
