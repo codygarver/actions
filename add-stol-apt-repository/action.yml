@@ -34,4 +34,5 @@ runs:
             apt-get update
           else
             sudo apt-get update
+          fi
         fi
