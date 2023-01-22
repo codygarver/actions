@@ -24,7 +24,7 @@ jobs:
       - name: Install deb-s3
         uses: codygarver/actions/setup-deb-s3@main
         with:
-          extra-tools: "true"
+          mk-build-deps: "true"
       - name: Test deb-s3 install
         run: |
           deb-s3 help
