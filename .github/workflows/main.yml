@@ -7,8 +7,8 @@ jobs:
   apt-repo:
     runs-on: ubuntu-latest
     container:
-      image: usdotfhwastoldev/autoware.ai:develop
-      options: --user root
+      image: usdotfhwastoldev/carma-base:develop
+      options: --user carma
     steps:
       - name: Add STOL apt repository
         uses: codygarver/actions/add-stol-apt-repository@main
@@ -16,4 +16,8 @@ jobs:
           codename: "develop"
       - name: Install something
         run: |
-          apt -y install carma-j2735-msgs
+          if [ "$(id --user)" -eq "0" ]; then
+            apt -y install carma-j2735-msgs
+          else
+            sudo apt -y install carma-j2735-msgs
+          fi
