@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: usdotfhwastoldev/carma-base:develop
-      options: --user carma
+      options: --user root
     steps:
       - name: Add STOL apt repository
         uses: codygarver/actions/add-stol-apt-repository@main
