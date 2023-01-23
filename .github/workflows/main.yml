@@ -1,10 +1,10 @@
-name: Test custom action
+name: Test STOL actions
 
 on:
   push:
 
 jobs:
-  apt-repo:
+  stol-actions:
     runs-on: ubuntu-latest
     container:
       image: usdotfhwastoldev/carma-base:develop
@@ -17,9 +17,9 @@ jobs:
       - name: Install something
         run: |
           if [ "$(id --user)" -eq "0" ]; then
-            apt -y install carma-j2735-msgs
+            apt-get -y install carma-j2735-msgs
           else
-            sudo apt -y install carma-j2735-msgs
+            sudo apt-get -y install carma-j2735-msgs
           fi
       - name: Install deb-s3
         uses: codygarver/actions/setup-deb-s3@main
